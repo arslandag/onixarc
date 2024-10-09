@@ -1,12 +1,11 @@
-using Onix.WebSites.Application.Features.WebSites.Commands.Create;
+using Onix.WebSites.Application.Commands.Create;
 
-namespace Onix.WebSites.Presentation.Controllers.Requests
+namespace Onix.WebSites.Presentation.Controllers.Requests;
+
+public record CreateWebSiteRequest(
+    string Url,
+    string Name)
 {
-    public record CreateWebSiteRequest(
-        string Url,
-        string Name)
-    {
-        public CreateWebSiteCommand ToCommand()
-            => new(Url, Name);
-    }
+    public CreateWebSiteCommand ToCommand()
+        => new(Url, Name);
 }

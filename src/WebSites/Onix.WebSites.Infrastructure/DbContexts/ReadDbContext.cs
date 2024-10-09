@@ -32,6 +32,7 @@ public class ReadDbContext(IConfiguration configuration) : DbContext, IReadDbCon
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(ReadDbContext).Assembly,
             type => type.FullName?.Contains("Configurations.Read") ?? false);
+        modelBuilder.HasDefaultSchema("website");
     }
 
     private ILoggerFactory CreateLoggerFactory() =>

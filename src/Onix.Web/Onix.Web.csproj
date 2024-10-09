@@ -21,4 +21,16 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Accounts\Onix.Account.Application\Onix.Account.Application.csproj" />
+      <ProjectReference Include="..\Accounts\Onix.Account.Domain\Onix.Account.Domain.csproj" />
+      <ProjectReference Include="..\Accounts\Onix.Account.Infrastructure\Onix.Account.Infrastructure.csproj" />
+      <ProjectReference Include="..\Accounts\Onix.Account.Presentation\Onix.Account.Presentation.csproj" />
+      <ProjectReference Include="..\Shared\Onix.Core\Onix.Core.csproj" />
+      <ProjectReference Include="..\WebSites\Onix.WebSites.Application\Onix.WebSites.Application.csproj" />
+      <ProjectReference Include="..\WebSites\Onix.WebSites.Domain\Onix.WebSites.Domain.csproj" />
+      <ProjectReference Include="..\WebSites\Onix.WebSites.Infrastructure\Onix.WebSites.Infrastructure.csproj" />
+      <ProjectReference Include="..\WebSites\Onix.WebSites.Presentation\Onix.WebSites.Presentation.csproj" />
+    </ItemGroup>
+
 </Project>

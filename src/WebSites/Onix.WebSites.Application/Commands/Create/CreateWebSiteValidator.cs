@@ -4,7 +4,7 @@ using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 
-namespace Onix.WebSites.Application.Features.WebSites.Commands.Create;
+namespace Onix.WebSites.Application.Commands.Create;
 
 public class CreateWebSiteValidator : AbstractValidator<CreateWebSiteCommand>
 {

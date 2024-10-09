@@ -1,5 +1,7 @@
 using CSharpFunctionalExtensions;
 using Onix.SharedKernel;
+using Onix.SharedKernel.ValueObjects.Ids;
+using Onix.WebSites.Domain.WebSites;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 
 namespace Onix.WebSites.Application.Database;
@@ -7,17 +9,17 @@ namespace Onix.WebSites.Application.Database;
 public interface IWebSiteRepository
 {
     Task<Result<WebSites.Domain.WebSites.WebSite, Error>> GetById(
-        WebSites.Domain.WebSites.WebSite webSite, CancellationToken cancellationToken = default);
+        WebSiteId webSiteId, CancellationToken cancellationToken = default);
     
     Task<Guid> Add(
-        WebSites.Domain.WebSites.WebSite webSite, CancellationToken cancellationToken);
+        WebSite webSite, CancellationToken cancellationToken);
 
     Guid Save(
-        WebSites.Domain.WebSites.WebSite webSite, CancellationToken cancellationToken = default);
+        WebSite webSite, CancellationToken cancellationToken = default);
 
     Guid Delete(
-        WebSites.Domain.WebSites.WebSite webSite, CancellationToken cancellationToken = default);
+        WebSite webSite, CancellationToken cancellationToken = default);
 
-    Task<Result<WebSites.Domain.WebSites.WebSite, Error>> GetByUrl(
+    Task<Result<WebSite, Error>> GetByUrl(
         Url url, CancellationToken cancellationToken = default);
 }

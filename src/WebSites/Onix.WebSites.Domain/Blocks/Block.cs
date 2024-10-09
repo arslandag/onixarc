@@ -18,17 +18,16 @@ public class Block : SharedKernel.Entity<BlockId>
     private Block(
         BlockId id,
         Title title,
-        Description description,
-        Photo backgroundPhoto) : base(id)
+        Description description) : base(id)
     {
         Title = title;
         Description = description;
-        BackgroundPhoto = backgroundPhoto;
     }
     
     public Title Title { get; private set; }
     public Description Description { get; private set; }
-    public Photo BackgroundPhoto { get; private set; }
+    
+    public Photo? BackgroundPhoto { get; private set; }
     
     public IReadOnlyList<Location> Locations => _locations;
     private readonly List<Location> _locations = [];
@@ -48,13 +47,11 @@ public class Block : SharedKernel.Entity<BlockId>
     public static Result<Block> Create(
         BlockId id,
         Title title,
-        Description description,
-        Photo backgroundPhoto)
+        Description description)
     {
         return new Block(
             id,
             title,
-            description,
-            backgroundPhoto);
+            description);
     }
 }

@@ -21,7 +21,9 @@ public class WriteDbContext(IConfiguration configuration) : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(WriteDbContext).Assembly,
-            type => type.FullName?.Contains("Configurations.Write") ?? false);
+            type => type.FullName?.Contains("Configurations.Write") ?? false); 
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema("website");
     }
 
     private ILoggerFactory CreateLoggerFactory() =>

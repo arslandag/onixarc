@@ -10,5 +10,5 @@
       <ProjectReference Include="..\..\Shared\Onix.Framework\Onix.Framework.csproj" />
       <ProjectReference Include="..\Onix.WebSites.Application\Onix.WebSites.Application.csproj" />
     </ItemGroup>
-
+    
 </Project>

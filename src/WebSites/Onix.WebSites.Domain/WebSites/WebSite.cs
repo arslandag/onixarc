@@ -63,6 +63,13 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
             appearance, showStatus);
     }
 
+    public  UnitResult<Error> AddBlock(Block block)
+    {
+        //реализовать позиции 
+        _blocks.Add(block);
+        return Result.Success<Error>();
+    }
+    
     public static Result<WebSite> AddFavicon(
         ref WebSite webSite, Photo favicon)
     {

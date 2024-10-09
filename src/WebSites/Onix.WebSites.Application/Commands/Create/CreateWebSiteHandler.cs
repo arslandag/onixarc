@@ -10,7 +10,7 @@ using Onix.WebSites.Application.Database;
 using Onix.WebSites.Domain.ConfigSite;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 
-namespace Onix.WebSites.Application.Features.WebSites.Commands.Create;
+namespace Onix.WebSites.Application.Commands.Create;
 
 public class CreateWebSiteHandler
 {

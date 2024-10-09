@@ -2,17 +2,18 @@ using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects.Ids;
+using Onix.WebSites.Application.Database;
 using Onix.WebSites.Domain.WebSites;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 using Onix.WebSites.Infrastructure.DbContexts;
 
 namespace Onix.WebSites.Infrastructure.Repositories;
 
-public class WebSiteRopository
+public class WebSiteRepository : IWebSiteRepository
 {
     private readonly WriteDbContext _dbContext;
 
-    public WebSiteRopository( WriteDbContext dbContext)
+    public WebSiteRepository( WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -22,15 +23,7 @@ public class WebSiteRopository
     {
         var website = await _dbContext.WebSites
             .Include(w => w.Blocks)
-            .ThenInclude(b => new 
-            {
-                b.BackgroundPhoto, 
-                b.Products,
-                b.Services,
-                b.Employees,
-                b.Locations, 
-                b.Photos,
-            })
+            .ThenInclude(b => b.BackgroundPhoto)
             .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken );
 
         if (website is null)
@@ -65,6 +58,8 @@ public class WebSiteRopository
         Url url, CancellationToken cancellationToken = default)
     {
         var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.BackgroundPhoto)
             .FirstOrDefaultAsync(w => w.Url == url, cancellationToken );
 
         if (website is null)

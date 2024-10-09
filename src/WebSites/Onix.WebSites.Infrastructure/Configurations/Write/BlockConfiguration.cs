@@ -39,30 +39,36 @@ public class BlockConfiguration : IEntityTypeConfiguration<Block>
         builder.HasOne(b => b.BackgroundPhoto)
             .WithOne()
             .HasForeignKey<Photo>("block_id")
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(b => b.Products)
             .WithOne()
             .HasForeignKey("block_id")
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(b => b.Services)
             .WithOne()
             .HasForeignKey("block_id")
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(b => b.Employees)
             .WithOne()
             .HasForeignKey("block_id")
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(b => b.Photos)
             .WithOne()
             .HasForeignKey("block_id")
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(b => b.Locations)
             .WithOne()
+            .IsRequired(false)
             .HasForeignKey("block_id")
             .OnDelete(DeleteBehavior.Cascade);
     }
