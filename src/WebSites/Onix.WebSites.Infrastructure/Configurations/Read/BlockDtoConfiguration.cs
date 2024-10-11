@@ -12,24 +12,37 @@ public class BlockDtoConfiguration : IEntityTypeConfiguration<BlockDto>
 
         builder.HasKey(b => b.Id);
 
+        builder.Property(b => b.Id)
+            .HasColumnName("Id");
+        
         builder.HasOne(b => b.BackPhoto)
             .WithOne()
-            .HasForeignKey("block_id");
-
-        builder.HasMany(b => b.Services)
-            .WithOne()
-            .HasForeignKey("block_id");
+            .HasForeignKey<PhotoDto>(p => p.BlockId)
+            .IsRequired(false);
 
         builder.HasMany(b => b.Products)
             .WithOne()
-            .HasForeignKey("block_id");
+            .HasForeignKey(p => p.BlockId)
+            .IsRequired(false);
+
+        builder.HasMany(b => b.Services)
+            .WithOne()
+            .HasForeignKey(s => s.BlockId)
+            .IsRequired(false);
 
         builder.HasMany(b => b.Employees)
             .WithOne()
-            .HasForeignKey("block_id");
+            .HasForeignKey(e => e.BlockId)
+            .IsRequired(false);
 
         builder.HasMany(b => b.Photos)
             .WithOne()
-            .HasForeignKey("block_id");
+            .HasForeignKey(p => p.BlockId)
+            .IsRequired(false);
+
+        builder.HasMany(b => b.Location)
+            .WithOne()
+            .IsRequired(false)
+            .HasForeignKey(l => l.BlockId);
     }
 }

@@ -24,7 +24,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             tb.Property(n => n.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.NAME_MAX_LENGHT)
-                .HasColumnName("product");
+                //баран нейм 
+                .HasColumnName("name");
         });
         
         builder.ComplexProperty(p => p.Description, tb =>

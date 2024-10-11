@@ -3,6 +3,8 @@ namespace Onix.Core.Dtos;
 public class LocationDto
 {
     public Guid Id { get; init; }
+    public Guid BlockId { get; init; }
+    
     public string Name { get; init; } = string.Empty;
     public string Phone { get; init; } = string.Empty;
     public string Country { get; init; } = string.Empty;

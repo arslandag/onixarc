@@ -10,6 +10,9 @@ public class LocationConfiguration : IEntityTypeConfiguration<LocationDto>
     {
         builder.ToTable("location");
 
+        builder.Property(l => l.Id)
+            .HasColumnName("Id");
+        
         builder.HasKey(l => l.Id);
     }
 }

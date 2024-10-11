@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Onix.Core.Abstraction;
 using Onix.WebSites.Application.Commands.AddBlock;
 using Onix.WebSites.Application.Commands.Create;
+using Onix.WebSites.Application.Queries.GetWebSiteById;
+using Onix.WebSites.Application.Queries.GetWebSiteByUrl;
 
 namespace Onix.WebSites.Application;
 
@@ -27,7 +29,8 @@ public static class Inject
 
         services
             .AddValidatorsFromAssembly(assembly)
-            .AddCommand();
+            .AddCommand()
+            .AddQuery();
 
         return services;
     }
@@ -38,6 +41,15 @@ public static class Inject
         service.AddScoped<CreateWebSiteHandler>();
         service.AddScoped<AddBlockHandler>();
         
+        return service;
+    }
+
+    private static IServiceCollection AddQuery(
+        this IServiceCollection service)
+    {
+        service.AddScoped<GetWebSiteByIdHandle>();
+        service.AddScoped<GetWebSiteByUrlHandle>();
+
         return service;
     }
 }

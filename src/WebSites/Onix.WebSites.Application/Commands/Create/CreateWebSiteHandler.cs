@@ -7,7 +7,9 @@ using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Application.Database;
+using Onix.WebSites.Application.Queries.GetWebSiteByUrl;
 using Onix.WebSites.Domain.ConfigSite;
+using Onix.WebSites.Domain.WebSites;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 
 namespace Onix.WebSites.Application.Commands.Create;
@@ -15,6 +17,7 @@ namespace Onix.WebSites.Application.Commands.Create;
 public class CreateWebSiteHandler
 {
     private readonly ILogger<CreateWebSiteHandler> _logger;
+    private readonly GetWebSiteByUrlHandle _getWebSiteByUrlHandle;
     private readonly IValidator<CreateWebSiteCommand> _validator;
     private readonly IWebSiteRepository _webSiteRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -23,9 +26,11 @@ public class CreateWebSiteHandler
         IValidator<CreateWebSiteCommand> validator,
         IWebSiteRepository webSiteWebSiteRepository,
         IUnitOfWork unitOfWork,
-        ILogger<CreateWebSiteHandler> logger)
+        ILogger<CreateWebSiteHandler> logger,
+        GetWebSiteByUrlHandle getWebSiteByUrlHandle)
     {
         _logger = logger;
+        _getWebSiteByUrlHandle = getWebSiteByUrlHandle;
         _validator = validator;
         _webSiteRepository = webSiteWebSiteRepository;
         _unitOfWork = unitOfWork;
@@ -41,8 +46,9 @@ public class CreateWebSiteHandler
         var url = Url.Create(command.Url).Value;
         var name = Name.Create(command.Name).Value;
 
-        //сделать проверку через readdbcontext
-        var website = await _webSiteRepository.GetByUrl(url, cancellationToken);
+        var query = new GetWebSiteByUrlQuery(url.Value);
+        
+        var website = await _getWebSiteByUrlHandle.Handle(query,cancellationToken);
         if (website.IsSuccess)
             return Errors.Domain.AlreadyExist(nameof(url)).ToErrorList();
 
@@ -50,7 +56,7 @@ public class CreateWebSiteHandler
         
         var appearance = Appearance.Bases;
         
-        var webSiteToCreate = Onix.WebSites.Domain.WebSites.WebSite.Create(
+        var webSiteToCreate = WebSite.Create(
             webSiteId,
             url,
             name,

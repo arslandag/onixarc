@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Onix.WebSites.Domain.Blocks;
+using Onix.WebSites.Domain.WebSites;
 
 namespace Onix.WebSites.Infrastructure.DbContexts;
 
@@ -8,7 +10,7 @@ public class WriteDbContext(IConfiguration configuration) : DbContext
 {
     private const string DATABASE = "Database";
 
-    public DbSet<Domain.WebSites.WebSite> WebSites => Set<Domain.WebSites.WebSite>();
+    public DbSet<WebSite> WebSites => Set<WebSite>();
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -22,7 +24,6 @@ public class WriteDbContext(IConfiguration configuration) : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(WriteDbContext).Assembly,
             type => type.FullName?.Contains("Configurations.Write") ?? false); 
-        base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("website");
     }
 

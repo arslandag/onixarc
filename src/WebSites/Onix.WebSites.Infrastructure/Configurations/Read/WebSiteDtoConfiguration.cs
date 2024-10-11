@@ -11,6 +11,12 @@ public class WebSiteDtoConfiguration : IEntityTypeConfiguration<WebSiteDto>
         builder.ToTable("website");
 
         builder.HasKey(w => w.Id);
+        
+        builder.Property(w => w.Id)
+            .HasColumnName("Id");
+        
+        builder.Property(w => w.Url)
+            .HasColumnName("url");
 
         builder.OwnsMany(w => w.Socials, tb =>
         {
@@ -26,6 +32,6 @@ public class WebSiteDtoConfiguration : IEntityTypeConfiguration<WebSiteDto>
         builder.HasMany(w => w.Blocks)
             .WithOne()
             .IsRequired(false)
-            .HasForeignKey("website_id");
+            .HasForeignKey(b => b.WebSiteId);
     }
 }

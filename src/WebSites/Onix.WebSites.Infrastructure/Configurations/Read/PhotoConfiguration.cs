@@ -11,5 +11,8 @@ public class PhotoConfiguration : IEntityTypeConfiguration<PhotoDto>
         builder.ToTable("photo");
 
         builder.HasKey(p => p.Id);
+        
+        builder.Property(p => p.Id)
+            .HasColumnName("Id");
     }
 }

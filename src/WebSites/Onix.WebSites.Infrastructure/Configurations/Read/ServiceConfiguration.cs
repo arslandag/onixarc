@@ -11,9 +11,13 @@ public class ServiceConfiguration : IEntityTypeConfiguration<ServiceDto>
         builder.ToTable("service");
 
         builder.HasKey(s => s.Id);
+        
+        builder.Property(s => s.Id)
+            .HasColumnName("Id");
 
         builder.HasMany(s => s.Photos)
             .WithOne()
-            .HasForeignKey("service_id");
+            .HasForeignKey(p => p.ServiceId)
+            .IsRequired(false);
     }
 }

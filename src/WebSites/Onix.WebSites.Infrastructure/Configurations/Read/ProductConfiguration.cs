@@ -8,12 +8,16 @@ public class ProductConfiguration : IEntityTypeConfiguration<ProductDto>
 {
     public void Configure(EntityTypeBuilder<ProductDto> builder)
     {
-        builder.ToTable("block");
+        builder.ToTable("product");
 
         builder.HasKey(p => p.Id);
         
+        builder.Property(p => p.Id)
+            .HasColumnName("Id");
+        
         builder.HasMany(p => p.Photos)
             .WithOne()
-            .HasForeignKey("product_id");
+            .HasForeignKey(p => p.ProductId)
+            .IsRequired(false);
     }
 }

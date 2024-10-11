@@ -12,8 +12,12 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<EmployeeDto>
         
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id)
+            .HasColumnName("Id");
+        
         builder.HasOne(e => e.Photo)
             .WithOne()
-            .HasForeignKey("employee_id");
+            .HasForeignKey<PhotoDto>("employee_id")
+            .IsRequired(false);
     }
 }

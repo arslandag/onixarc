@@ -7,6 +7,7 @@ using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Application.Database;
+using Onix.WebSites.Application.Queries.GetWebSiteById;
 using Onix.WebSites.Domain.Blocks;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
 
@@ -23,12 +24,12 @@ public class AddBlockHandler
         IValidator<AddBlockCommand> validator,
         IWebSiteRepository webSiteRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddBlockCommand> logge)
+        ILogger<AddBlockCommand> logger)
     {
         _validator = validator;
         _webSiteRepository = webSiteRepository;
         _unitOfWork = unitOfWork;
-        _logger = logge;
+        _logger = logger;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(

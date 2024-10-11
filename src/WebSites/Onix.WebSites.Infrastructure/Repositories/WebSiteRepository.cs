@@ -58,13 +58,85 @@ public class WebSiteRepository : IWebSiteRepository
         Url url, CancellationToken cancellationToken = default)
     {
         var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.BackgroundPhoto)
             .FirstOrDefaultAsync(w => w.Url == url, cancellationToken );
 
         if (website is null)
             return Errors.General.NotFound();
 
+        return website;
+    }
+    
+    public async Task<Result<WebSite, Error>> GetByIdWithProduct(
+        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    {
+        var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.Products)
+            .ThenInclude(p => p.ProductPhotos)
+            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+
+        if (website is null)
+            return Errors.General.NotFound(webSiteId.Value);
+        
+        return website;
+    }
+    
+    public async Task<Result<WebSite, Error>> GetByIdWithService(
+        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    {
+        var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.Services)
+            .ThenInclude(s => s.ServicePhotos)
+            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+
+        if (website is null)
+            return Errors.General.NotFound(webSiteId.Value);
+        
+        return website;
+    }
+    
+     
+    public async Task<Result<WebSite, Error>> GetByIdWithEmployee(
+        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    {
+        var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.Employees)
+            .ThenInclude(s => s.Photo)
+            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+
+        if (website is null)
+            return Errors.General.NotFound(webSiteId.Value);
+        
+        return website;
+    }
+    
+    public async Task<Result<WebSite, Error>> GetByIdWithPhoto(
+        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    {
+        var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.Photos)
+            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+
+        if (website is null)
+            return Errors.General.NotFound(webSiteId.Value);
+        
+        return website;
+    }
+    
+    public async Task<Result<WebSite, Error>> GetByIdWithLocation(
+        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    {
+        var website = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .ThenInclude(b => b.Locations)
+            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+
+        if (website is null)
+            return Errors.General.NotFound(webSiteId.Value);
+        
         return website;
     }
 }
