@@ -83,19 +83,36 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
 
     public UnitResult<Error> Update(
         Url newUrl = null,
-        Name newName = null,
-        Phone newPhone = null,
-        Email newEmail = null)
+        Name newName = null)
     {
         this.Url = newUrl ?? this.Url;
         this.Name = newName ?? this.Name;
-        this.Phone = newPhone ?? this.Phone;
-        this.Email = newEmail ?? this.Email;
-
+        
         return UnitResult.Success<Error>();
     }
 
-    //social media
+    //contact
+    public UnitResult<Error> AddSocial(
+        SocialMedia socialMedia)
+    {
+        if (_socialMedias.Count >= Constants.MAX_SOCIAL_COUNT)
+            return UnitResult.Failure<Error>(
+                Errors.Domain.MaxCount(nameof(socialMedia)));
+
+        _socialMedias.Add(socialMedia);
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> DeleteSocial(
+        SocialMedia socialMedia)
+    {
+        if (_socialMedias.Count >= Constants.MIN_COUNT)
+            return UnitResult.Failure<Error>(
+                Errors.Domain.Empty(nameof(socialMedia)));
+
+        _socialMedias.Remove(socialMedia);
+        return UnitResult.Success<Error>();
+    }
     
     //faq
     public UnitResult<Error> AddFAQ(
