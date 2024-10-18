@@ -12,7 +12,7 @@ public interface IWebSiteRepository
         WebSiteId webSiteId, CancellationToken cancellationToken = default);
 
     Task<Guid> Add(
-        WebSite webSite, CancellationToken cancellationToken);
+        WebSite webSite, CancellationToken cancellationToken = default);
 
     Guid Save(
         WebSite webSite, CancellationToken cancellationToken = default);
@@ -23,18 +23,12 @@ public interface IWebSiteRepository
     Task<Result<WebSite, Error>> GetByUrl(
         Url url, CancellationToken cancellationToken = default);
 
-    Task<Result<WebSite, Error>> GetByIdWithProduct(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default);
+    Task<Result<WebSite, Error>> GetByIdWithBlocks(
+        WebSiteId id, CancellationToken cancellationToken = default);
 
-    Task<Result<WebSite, Error>> GetByIdWithService(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default);
-
-    Task<Result<WebSite, Error>> GetByIdWithEmployee(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default);
-
-    Task<Result<WebSite, Error>> GetByIdWithPhoto(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default);
+    Task<Result<WebSite, Error>> GetByIdWithCategories(
+        WebSiteId id, CancellationToken cancellationToken = default);
 
     Task<Result<WebSite, Error>> GetByIdWithLocation(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default);
+        WebSiteId id, CancellationToken cancellationToken = default);
 }

@@ -30,10 +30,7 @@ public class User : SharedKernel.Entity<UserId>
     public PasswordHash PasswordHash { get; private set; }
     public FullName FullName { get; private set; }
     public Phone UserPhone { get; private set; }
-
-    public IReadOnlyList<WebSites.Domain.WebSites.WebSite> WebSites => _webSites;
-    private readonly List<WebSites.Domain.WebSites.WebSite> _webSites = [];
-
+    
     public static Result<User, Error> Create(
         UserId id,
         Email email,

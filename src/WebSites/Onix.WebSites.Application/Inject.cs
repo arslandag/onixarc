@@ -1,8 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Onix.Core.Abstraction;
-using Onix.WebSites.Application.Commands.AddBlock;
-using Onix.WebSites.Application.Commands.Create;
+using Onix.WebSites.Application.Commands.Blocks.AddBlock;
+using Onix.WebSites.Application.Commands.WebSites.Create;
 using Onix.WebSites.Application.Queries.GetWebSiteById;
 using Onix.WebSites.Application.Queries.GetWebSiteByUrl;
 

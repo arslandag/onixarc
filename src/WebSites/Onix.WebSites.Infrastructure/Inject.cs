@@ -31,6 +31,7 @@ public static class Inject
         this IServiceCollection service)
     {
         service.AddScoped<IWebSiteRepository, WebSiteRepository>();
+        service.AddScoped<ICategoryRepository, CategoryRepository>();
         
         return service;
     }

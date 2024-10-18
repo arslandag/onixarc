@@ -5,5 +5,6 @@ public enum SocialType
     WhatsApp,
     Telegram,
     Instagram,
-    YouTube
+    YouTube,
+    VK
 }

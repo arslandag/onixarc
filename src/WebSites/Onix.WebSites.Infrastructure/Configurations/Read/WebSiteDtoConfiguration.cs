@@ -17,21 +17,25 @@ public class WebSiteDtoConfiguration : IEntityTypeConfiguration<WebSiteDto>
         
         builder.Property(w => w.Url)
             .HasColumnName("url");
-
-        builder.OwnsMany(w => w.Socials, tb =>
-        {
-            tb.Property(s => s.Social)
-                .IsRequired(false)
-                .HasColumnName("social");
-
-            tb.Property(l => l.Link)
-                .IsRequired(false)
-                .HasColumnName("link");
-        });
         
         builder.HasMany(w => w.Blocks)
             .WithOne()
             .IsRequired(false)
             .HasForeignKey(b => b.WebSiteId);
+        
+        builder.HasMany(w => w.Categories)
+            .WithOne()
+            .IsRequired(false)
+            .HasForeignKey(b => b.WebSiteId);
+
+        builder.HasMany(w => w.Favicon)
+            .WithOne()
+            .IsRequired(false)
+            .HasForeignKey(f => f.WebSiteId);
+        
+        builder.HasMany(c => c.Location)
+            .WithOne()
+            .IsRequired(false)
+            .HasForeignKey(p => p.WebSiteId);
     }
 }

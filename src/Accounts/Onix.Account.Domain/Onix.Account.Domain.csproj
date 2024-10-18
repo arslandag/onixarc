@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\Onix.SharedKernel\Onix.SharedKernel.csproj" />
-      <ProjectReference Include="..\..\WebSites\Onix.WebSites.Domain\Onix.WebSites.Domain.csproj" />
     </ItemGroup>
 
 </Project>

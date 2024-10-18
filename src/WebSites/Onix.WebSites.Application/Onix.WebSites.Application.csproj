@@ -11,4 +11,12 @@
       <ProjectReference Include="..\Onix.WebSites.Domain\Onix.WebSites.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\Blocks\" />
+      <Folder Include="Commands\Categories\" />
+      <Folder Include="Commands\Products\" />
+      <Folder Include="Commands\Services\" />
+      <Folder Include="Queries\GetWebBlockById\" />
+    </ItemGroup>
+
 </Project>

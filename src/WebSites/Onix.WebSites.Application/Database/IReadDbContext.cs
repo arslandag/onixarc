@@ -8,6 +8,7 @@ public interface IReadDbContext
     IQueryable<BlockDto> Blocks { get; }
     IQueryable<ProductDto> Product { get; }
     IQueryable<ServiceDto> Service { get; }
-    IQueryable<EmployeeDto> Employee { get; }
     IQueryable<PhotoDto> Photo { get; }
+    IQueryable<CategoryDto> Category { get; }
+
 }

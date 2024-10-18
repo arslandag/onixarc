@@ -22,7 +22,6 @@ public record Address
     public string? Index { get; }
 
     public static Result<Address> Create(
-        string country,
         string city,
         string street,
         string build,

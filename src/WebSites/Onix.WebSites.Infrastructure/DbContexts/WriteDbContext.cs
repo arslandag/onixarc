@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Onix.WebSites.Domain.Blocks;
+using Onix.WebSites.Domain.Categories;
 using Onix.WebSites.Domain.WebSites;
 
 namespace Onix.WebSites.Infrastructure.DbContexts;
@@ -11,6 +12,7 @@ public class WriteDbContext(IConfiguration configuration) : DbContext
     private const string DATABASE = "Database";
 
     public DbSet<WebSite> WebSites => Set<WebSite>();
+    public DbSet<Category> Categories => Set<Category>();
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

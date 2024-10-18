@@ -1,4 +1,5 @@
 using CSharpFunctionalExtensions;
+using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Domain.Locations.ValueObjects;
@@ -33,13 +34,24 @@ public class Location : SharedKernel.Entity<LocationId>
     public static Result<Location> Create(
         LocationId id,
         Name name,
-        Phone locationPhone,
+        Phone phone,
         Address locationAddress)
     {
         return new Location(
             id,
             name,
-            locationPhone,
+            phone,
             locationAddress);
+    }
+
+    //исправить это
+    public UnitResult<Error> AddSchedule(
+        Schedule schedule)
+    {
+        if (_schedules.Count >= Constants.SHARE_MAX_LENGTH)
+            return UnitResult.Failure<Error>(Errors.Domain.MaxCount());
+        
+        _schedules.Add(schedule);
+        return UnitResult.Success<Error>();
     }
 }

@@ -18,22 +18,21 @@ public class WebSiteRepository : IWebSiteRepository
         _dbContext = dbContext;
     }
     
+    
     public async Task<Result<WebSite,Error>> GetById(
         WebSiteId webSiteId, CancellationToken cancellationToken = default)
     {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.BackgroundPhoto)
+        var webSite = await _dbContext.WebSites
             .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken );
 
-        if (website is null)
+        if (webSite is null)
             return Errors.General.NotFound(webSiteId.Value);
         
-        return website;
+        return webSite;
     }
 
     public async Task<Guid> Add(
-        WebSite webSite, CancellationToken cancellationToken)
+        WebSite webSite, CancellationToken cancellationToken = default)
     {
         await _dbContext.WebSites.AddAsync(webSite, cancellationToken);
 
@@ -57,86 +56,51 @@ public class WebSiteRepository : IWebSiteRepository
     public async Task<Result<WebSite, Error>> GetByUrl(
         Url url, CancellationToken cancellationToken = default)
     {
-        var website = await _dbContext.WebSites
+        var webSite = await _dbContext.WebSites
             .FirstOrDefaultAsync(w => w.Url == url, cancellationToken );
 
-        if (website is null)
+        if (webSite is null)
             return Errors.General.NotFound();
 
-        return website;
+        return webSite;
     }
-    
-    public async Task<Result<WebSite, Error>> GetByIdWithProduct(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default)
-    {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.Products)
-            .ThenInclude(p => p.ProductPhotos)
-            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
 
-        if (website is null)
-            return Errors.General.NotFound(webSiteId.Value);
+    public async Task<Result<WebSite, Error>> GetByIdWithBlocks(
+        WebSiteId id, CancellationToken cancellationToken = default)
+    {
+        var webSite = await _dbContext.WebSites
+            .Include(w => w.Blocks)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
-        return website;
+        if (webSite is null)
+            return Errors.General.NotFound();
+
+        return webSite;
     }
-    
-    public async Task<Result<WebSite, Error>> GetByIdWithService(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default)
-    {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.Services)
-            .ThenInclude(s => s.ServicePhotos)
-            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
 
-        if (website is null)
-            return Errors.General.NotFound(webSiteId.Value);
-        
-        return website;
-    }
-    
-     
-    public async Task<Result<WebSite, Error>> GetByIdWithEmployee(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+    public async Task<Result<WebSite, Error>> GetByIdWithCategories(
+        WebSiteId id, CancellationToken cancellationToken = default)
     {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.Employees)
-            .ThenInclude(s => s.Photo)
-            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
-
-        if (website is null)
-            return Errors.General.NotFound(webSiteId.Value);
+        var webSite = await _dbContext.WebSites
+            .Include(w => w.Categories)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
-        return website;
-    }
-    
-    public async Task<Result<WebSite, Error>> GetByIdWithPhoto(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default)
-    {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.Photos)
-            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
+        if (webSite is null)
+            return Errors.General.NotFound();
 
-        if (website is null)
-            return Errors.General.NotFound(webSiteId.Value);
-        
-        return website;
+        return webSite;
     }
     
     public async Task<Result<WebSite, Error>> GetByIdWithLocation(
-        WebSiteId webSiteId, CancellationToken cancellationToken = default)
+        WebSiteId id, CancellationToken cancellationToken = default)
     {
-        var website = await _dbContext.WebSites
-            .Include(w => w.Blocks)
-            .ThenInclude(b => b.Locations)
-            .FirstOrDefaultAsync(w => w.Id == webSiteId, cancellationToken);
-
-        if (website is null)
-            return Errors.General.NotFound(webSiteId.Value);
+        var webSite = await _dbContext.WebSites
+            .Include(w => w.Locations)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
-        return website;
+        if (webSite is null)
+            return Errors.General.NotFound();
+
+        return webSite;
     }
 }

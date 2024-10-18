@@ -30,7 +30,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.ComplexProperty(l => l.LocationPhone, tb =>
         {
             tb.Property(p => p.Value)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(Constants.PHONE_MAX_LENGHT)
                 .HasColumnName("phone");
         });
@@ -40,7 +40,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             tb.Property(p => p.City)
                 .IsRequired()
                 .HasMaxLength(Constants.ADDRESS_MAX_LENGHT)
-                .HasColumnName("country");
+                .HasColumnName("city");
             
             tb.Property(p => p.Street)
                 .IsRequired()
@@ -60,6 +60,8 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         
         builder.OwnsMany(s => s.Schedules, tb =>
         {
+            tb.ToJson(); 
+            
             tb.Property(w => w.WeekDay)
                 .IsRequired()
                 .HasMaxLength(Constants.WEEKDAY_MAX_LENGHT)
@@ -68,7 +70,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             tb.Property(s => s.StartTime)
                 .IsRequired()
                 .HasMaxLength(Constants.TIME_MAX_LENGHT)
-                .HasColumnName("starttime");
+                .HasColumnName("startTime");
             
             tb.Property(e => e.EndTime)
                 .IsRequired()

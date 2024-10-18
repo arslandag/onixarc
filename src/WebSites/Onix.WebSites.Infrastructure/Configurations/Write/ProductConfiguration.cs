@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects.Ids;
-using Onix.WebSites.Domain.Entities;
+using Onix.WebSites.Domain.Categories.Entities;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Write;
 
@@ -24,7 +24,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             tb.Property(n => n.Value)
                 .IsRequired()
                 .HasMaxLength(Constants.NAME_MAX_LENGHT)
-                //баран нейм 
                 .HasColumnName("name");
         });
         
@@ -36,14 +35,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 .HasColumnName("description");
         });
         
-        builder.OwnsOne(p => p.Price, tb =>
+        builder.ComplexProperty(p => p.Price, tb =>
         {
             tb.Property(n => n.Value)
                 .IsRequired(false)
                 .HasColumnName("price");
         });
         
-        builder.OwnsOne(p => p.Link, tb =>
+        builder.ComplexProperty(p => p.Link, tb =>
         {
             tb.Property(l => l.Value)
                 .IsRequired(false)
@@ -53,6 +52,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.HasMany(p => p.ProductPhotos)
             .WithOne()
+            .IsRequired(false)
             .HasForeignKey("product_id")
             .OnDelete(DeleteBehavior.Cascade);
     }
