@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Onix.Framework;
-using Onix.WebSites.Application.Commands.Blocks.AddBlock;
 using Onix.WebSites.Application.Commands.Products.AddProduct;
+using Onix.WebSites.Application.Commands.WebSites.AddBlock;
 using Onix.WebSites.Application.Commands.WebSites.Create;
 using Onix.WebSites.Presentation.Controllers.WebSites.Requests;
 

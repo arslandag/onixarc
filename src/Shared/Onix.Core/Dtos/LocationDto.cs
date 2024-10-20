@@ -13,5 +13,5 @@ public class LocationDto
     public string Build { get; init; } = string.Empty;
     public string? Index { get; init; } = string.Empty;
     
-    public List<ScheduleDto> Schedule { get; init; } = [];
+    public List<ScheduleDto> Schedules { get; init; } = [];
 }

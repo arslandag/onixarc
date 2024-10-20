@@ -9,7 +9,7 @@ using Onix.WebSites.Application.Database;
 using Onix.WebSites.Domain.Blocks;
 using Onix.WebSites.Domain.Blocks.ValueObjects;
 
-namespace Onix.WebSites.Application.Commands.Blocks.AddBlock;
+namespace Onix.WebSites.Application.Commands.WebSites.AddBlock;
 
 public class AddBlockHandler
 {

@@ -5,6 +5,7 @@ using Onix.Core.Abstraction;
 using Onix.Core.Extensions;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
+using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Application.Database;
 using Onix.WebSites.Application.Queries.GetWebSiteByUrl;
 using Onix.WebSites.Domain.WebSites.ValueObjects;
@@ -48,7 +49,9 @@ public class UpdateWebSiteHandle
         if (existingWebsite.IsSuccess)
             return Errors.Domain.AlreadyExist(nameof(url)).ToErrorList();
 
-        var webSiteResult = await _webSiteRepository.GetById(command.WebSiteId, cancellationToken);
+        var webSiteId = WebSiteId.Create(command.WebSiteId);
+        
+        var webSiteResult = await _webSiteRepository.GetById(webSiteId, cancellationToken);
         if (webSiteResult.IsFailure)
             return webSiteResult.Error.ToErrorList();
 
@@ -56,7 +59,6 @@ public class UpdateWebSiteHandle
         webSiteResult.Value.Update(url, name);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         _logger.LogInformation("Updated website with ID {WebsiteId}", command.WebSiteId);
 
         return webSiteResult.Value.Id.Value;

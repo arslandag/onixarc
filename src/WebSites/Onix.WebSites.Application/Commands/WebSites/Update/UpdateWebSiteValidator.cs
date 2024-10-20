@@ -13,7 +13,11 @@ public class UpdateWebSiteValidator : AbstractValidator<UpdateWebSiteCommand>
     {
         RuleFor(a => a.WebSiteId)
             .NotEmpty()
-            .WithError(Errors.Domain.ValueIsRequired(nameof(WebSiteId))); 
+            .WithError(Errors.Domain.ValueIsRequired(nameof(WebSiteId)));
+
+        RuleFor(a => a.WebSiteId.ToString())
+            .Matches(Constants.ID_REGEX)
+            .WithError(Errors.Domain.ValueIsInvalid(nameof(WebSiteId)));
         
         RuleFor(c => c.Url)
             .NotEmpty()

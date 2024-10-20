@@ -1,4 +1,4 @@
-using Onix.WebSites.Application.Commands.Blocks.AddBlock;
+using Onix.WebSites.Application.Commands.WebSites.AddBlock;
 
 namespace Onix.WebSites.Presentation.Controllers.WebSites.Requests;
 

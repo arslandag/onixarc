@@ -17,6 +17,32 @@ public class WebSiteDtoConfiguration : IEntityTypeConfiguration<WebSiteDto>
         
         builder.Property(w => w.Url)
             .HasColumnName("url");
+
+        builder.OwnsMany(w => w.SocialMedias, tb =>
+        {
+            tb.ToJson();
+
+            tb.Property(s => s.Social)
+                .IsRequired(false)
+                .HasColumnName("social");
+
+            tb.Property(s => s.Link)
+                .IsRequired(false)
+                .HasColumnName("link");
+        });
+
+        builder.OwnsMany(w => w.FAQs, tb =>
+        {
+            tb.ToJson();
+
+            tb.Property(f => f.Question)
+                .IsRequired(false)
+                .HasColumnName("question");
+
+            tb.Property(f => f.Answer)
+                .IsRequired()
+                .HasColumnName("answer");
+        });
         
         builder.HasMany(w => w.Blocks)
             .WithOne()

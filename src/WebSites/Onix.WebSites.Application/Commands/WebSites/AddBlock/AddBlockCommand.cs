@@ -1,6 +1,6 @@
 using Onix.Core.Abstraction;
 
-namespace Onix.WebSites.Application.Commands.Blocks.AddBlock;
+namespace Onix.WebSites.Application.Commands.WebSites.AddBlock;
 
 public record AddBlockCommand(
     Guid WebSiteId,

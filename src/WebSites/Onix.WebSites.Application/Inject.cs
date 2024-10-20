@@ -1,8 +1,9 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Onix.Core.Abstraction;
-using Onix.WebSites.Application.Commands.Blocks.AddBlock;
 using Onix.WebSites.Application.Commands.WebSites.Create;
+using Onix.WebSites.Application.Commands.WebSites.Delete;
+using Onix.WebSites.Application.Commands.WebSites.Update;
 using Onix.WebSites.Application.Queries.GetWebSiteById;
 using Onix.WebSites.Application.Queries.GetWebSiteByUrl;
 
@@ -29,22 +30,23 @@ public static class Inject
 
         services
             .AddValidatorsFromAssembly(assembly)
-            .AddCommand()
-            .AddQuery();
+            .AddWebSiteCommand()
+            .AddWebSiteQuery();
 
         return services;
     }
 
-    private static IServiceCollection AddCommand(
+    private static IServiceCollection AddWebSiteCommand(
         this IServiceCollection service)
     {
         service.AddScoped<CreateWebSiteHandler>();
-        service.AddScoped<AddBlockHandler>();
+        service.AddScoped<UpdateWebSiteHandle>();
+        service.AddScoped<DeleteWebSiteHandle>();
         
         return service;
     }
 
-    private static IServiceCollection AddQuery(
+    private static IServiceCollection AddWebSiteQuery(
         this IServiceCollection service)
     {
         service.AddScoped<GetWebSiteByIdHandle>();

@@ -12,5 +12,8 @@ public class DeleteWebSiteValidator : AbstractValidator<DeleteWebSiteCommand>
         RuleFor(w => w.WebSiteId)
             .NotEmpty()
             .WithError(Errors.Domain.Empty(nameof(WebSiteId)));
+
+        RuleFor(w => w.WebSiteId.ToString())
+            .Matches(Constants.ID_REGEX);
     }
 }
