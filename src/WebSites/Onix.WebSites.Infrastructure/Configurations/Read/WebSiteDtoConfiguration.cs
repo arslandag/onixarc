@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Onix.Core.Dtos;
@@ -17,32 +18,20 @@ public class WebSiteDtoConfiguration : IEntityTypeConfiguration<WebSiteDto>
         
         builder.Property(w => w.Url)
             .HasColumnName("url");
+        
+        builder.Property(w => w.SocialMedias)
+            .HasColumnName("social_medias")
+            .IsRequired(false)
+            .HasConversion(
+                sm => JsonSerializer.Serialize(sm, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<SocialMediaDto>>(json, JsonSerializerOptions.Default)!);
 
-        builder.OwnsMany(w => w.SocialMedias, tb =>
-        {
-            tb.ToJson();
-
-            tb.Property(s => s.Social)
-                .IsRequired(false)
-                .HasColumnName("social");
-
-            tb.Property(s => s.Link)
-                .IsRequired(false)
-                .HasColumnName("link");
-        });
-
-        builder.OwnsMany(w => w.FAQs, tb =>
-        {
-            tb.ToJson();
-
-            tb.Property(f => f.Question)
-                .IsRequired(false)
-                .HasColumnName("question");
-
-            tb.Property(f => f.Answer)
-                .IsRequired()
-                .HasColumnName("answer");
-        });
+        builder.Property(w => w.Faqs)
+            .HasColumnName("faqs")
+            .IsRequired(false)
+            .HasConversion(
+                faqs => JsonSerializer.Serialize(faqs, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<FaqDto>>(json, JsonSerializerOptions.Default)!);
         
         builder.HasMany(w => w.Blocks)
             .WithOne()

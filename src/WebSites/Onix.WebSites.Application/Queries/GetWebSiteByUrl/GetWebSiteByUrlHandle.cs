@@ -15,15 +15,15 @@ public class GetWebSiteByUrlHandle
         _readDbContext = readDbContext;
     }
     
-    public async Task<Result<WebSiteDto, ErrorList>> Handle(
+    public async Task<Result<WebSiteDto, Error>> Handle(
         GetWebSiteByUrlQuery query,
         CancellationToken cancellationToken = default)
     {
         var webSiteDto = await _readDbContext.WebSites
             .FirstOrDefaultAsync(w => w.Url == query.Url, cancellationToken);
-
+        
         if (webSiteDto is null)
-            return Errors.General.NotFound().ToErrorList();
+            return Errors.General.NotFound();
 
         return webSiteDto;
     }

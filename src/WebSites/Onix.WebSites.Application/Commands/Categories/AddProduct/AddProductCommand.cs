@@ -1,6 +1,6 @@
 using Onix.Core.Abstraction;
 
-namespace Onix.WebSites.Application.Commands.Products.AddProduct;
+namespace Onix.WebSites.Application.Commands.Categories.AddProduct;
 
 public record AddProductCommand(
     Guid WebSiteId,

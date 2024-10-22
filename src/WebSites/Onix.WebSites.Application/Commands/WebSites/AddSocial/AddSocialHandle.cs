@@ -6,53 +6,50 @@ using Onix.Core.Extensions;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Application.Database;
-using Onix.WebSites.Domain.Blocks;
-using Onix.WebSites.Domain.Blocks.ValueObjects;
+using Onix.WebSites.Domain.WebSites.ValueObjects;
 
-namespace Onix.WebSites.Application.Commands.WebSites.AddBlock;
+namespace Onix.WebSites.Application.Commands.WebSites.AddSocial;
 
-public class AddBlockHandler
+public class AddSocialHandle
 {
-    private readonly IValidator<AddBlockCommand> _validator;
+    private readonly ILogger<AddSocialHandle> _logger;
     private readonly IWebSiteRepository _webSiteRepository;
+    private readonly IValidator<AddSocialCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<AddBlockHandler> _logger;
 
-    public AddBlockHandler(
-        IValidator<AddBlockCommand> validator,
+    public AddSocialHandle(
+        ILogger<AddSocialHandle> logger,
         IWebSiteRepository webSiteRepository,
-        IUnitOfWork unitOfWork,
-        ILogger<AddBlockHandler> logger)
+        IValidator<AddSocialCommand> validator,
+        IUnitOfWork unitOfWork)
     {
-        _validator = validator;
-        _webSiteRepository = webSiteRepository;
-        _unitOfWork = unitOfWork;
         _logger = logger;
+        _webSiteRepository = webSiteRepository;
+        _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
-        AddBlockCommand command ,CancellationToken cancellationToken)
+        AddSocialCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command,cancellationToken);
         if (validationResult.IsValid == false)
             return validationResult.ToList();
-
         var webSiteId = WebSiteId.Create(command.WebSiteId);
         
         var webSiteResult = await _webSiteRepository
-            .GetByIdWithBlocks(webSiteId, cancellationToken);
+            .GetById(webSiteId, cancellationToken);
         if (webSiteResult.IsFailure)
             return webSiteResult.Error.ToErrorList();
 
-        var blockId = BlockId.NewUserId();
-        var code = Code.Create(command.Code).Value;
-        var block = Block.Create(blockId, code).Value;
-
-        var result = webSiteResult.Value.AddBlock(block);
+        var socialMedia = SocialMedia.Create(command.Social, command.Link).Value;
+        
+        var result = webSiteResult.Value.AddSocial(socialMedia);
         if (result.IsFailure)
             return result.Error.ToErrorList();
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return block.Id.Value;
+
+        return webSiteResult.Value.Id.Value;
     }
 }

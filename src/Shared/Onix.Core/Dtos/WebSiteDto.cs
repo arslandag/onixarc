@@ -13,12 +13,12 @@ public class WebSiteDto
     public string ButtonStyle { get; init; } = string.Empty;
     public string Font { get; init; } = string.Empty;
     
-    public string Phone { get; init; } = string.Empty;
-    public string Email { get; init; } = string.Empty;
+    public string? Phone { get; init; } = string.Empty;
+    public string? Email { get; init; } = string.Empty;
 
     public List<PhotoDto> Favicon { get; init; } = [];
-    public List<SocialDto> SocialMedias { get; init; } = [];
-    public List<DataSolutionDto> FAQs { get; init; } = [];
+    public List<SocialMediaDto> SocialMedias { get; init; } = [];
+    public List<FaqDto> Faqs { get; init; } = [];
     public List<BlockDto> Blocks { get; init; } = [];
     public List<CategoryDto> Categories { get; init; } = [];
     public List<LocationDto> Location { get; init; } = [];

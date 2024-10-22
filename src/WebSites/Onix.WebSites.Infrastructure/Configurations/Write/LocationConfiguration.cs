@@ -1,8 +1,10 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Domain.Locations;
+using Onix.WebSites.Domain.Locations.ValueObjects;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Write;
 
@@ -58,24 +60,12 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
                 .HasColumnName("index");
         });
         
-        builder.OwnsMany(s => s.Schedules, tb =>
-        {
-            tb.ToJson(); 
-            
-            tb.Property(w => w.WeekDay)
-                .IsRequired()
-                .HasMaxLength(Constants.WEEKDAY_MAX_LENGHT)
-                .HasColumnName("weekday");
-            
-            tb.Property(s => s.StartTime)
-                .IsRequired()
-                .HasMaxLength(Constants.TIME_MAX_LENGHT)
-                .HasColumnName("startTime");
-            
-            tb.Property(e => e.EndTime)
-                .IsRequired()
-                .HasMaxLength(Constants.TIME_MAX_LENGHT)
-                .HasColumnName("endTime");
-        });
+        builder.Property(w => w.Schedules)
+            .HasColumnName("schedules")
+            .HasMaxLength(Constants.JSON_MAX_LENGTH)
+            .IsRequired(false)
+            .HasConversion(
+                sc => JsonSerializer.Serialize(sc, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<Schedule>>(json, JsonSerializerOptions.Default)!);
     }
 }

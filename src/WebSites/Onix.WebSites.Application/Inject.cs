@@ -1,6 +1,11 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Onix.Core.Abstraction;
+using Onix.WebSites.Application.Commands.WebSites.AddBlock;
+using Onix.WebSites.Application.Commands.WebSites.AddCategory;
+using Onix.WebSites.Application.Commands.WebSites.AddContact;
+using Onix.WebSites.Application.Commands.WebSites.AddFAQ;
+using Onix.WebSites.Application.Commands.WebSites.AddLocation;
 using Onix.WebSites.Application.Commands.WebSites.Create;
 using Onix.WebSites.Application.Commands.WebSites.Delete;
 using Onix.WebSites.Application.Commands.WebSites.Update;
@@ -42,6 +47,12 @@ public static class Inject
         service.AddScoped<CreateWebSiteHandler>();
         service.AddScoped<UpdateWebSiteHandle>();
         service.AddScoped<DeleteWebSiteHandle>();
+
+        service.AddScoped<AddBlockHandler>();
+        service.AddScoped<AddCategoryHandle>();
+        service.AddScoped<AddContactHandle>();
+        service.AddScoped<AddFAQHandle>();
+        service.AddScoped<AddLocationHandle>();
         
         return service;
     }

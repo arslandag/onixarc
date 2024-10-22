@@ -7,8 +7,8 @@ public class ProductDto
     
     public string Name { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
-    public string Price { get; init; } = string.Empty;
-    public string Link { get; init; } = string.Empty;
+    public string? Price { get; init; } = string.Empty;
+    public string? Link { get; init; } = string.Empty;
 
     public List<PhotoDto> Photos { get; init; } = [];
 }

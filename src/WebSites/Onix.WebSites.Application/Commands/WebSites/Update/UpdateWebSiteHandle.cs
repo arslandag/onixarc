@@ -42,10 +42,9 @@ public class UpdateWebSiteHandle
             return validationResult.ToList();
 
         var url = Url.Create(command.Url).Value;
-
         var query = new GetWebSiteByUrlQuery(url.Value);
+        
         var existingWebsite = await _getWebSiteByUrlHandle.Handle(query, cancellationToken);
-
         if (existingWebsite.IsSuccess)
             return Errors.Domain.AlreadyExist(nameof(url)).ToErrorList();
 
@@ -56,11 +55,12 @@ public class UpdateWebSiteHandle
             return webSiteResult.Error.ToErrorList();
 
         var name = Name.Create(command.Name).Value;
-        webSiteResult.Value.Update(url, name);
-
+        
+        var result = webSiteResult.Value.Update(url, name);
+        if (result.IsFailure)
+            return result.Error.ToErrorList();
+        
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        _logger.LogInformation("Updated website with ID {WebsiteId}", command.WebSiteId);
-
         return webSiteResult.Value.Id.Value;
     }
 }

@@ -4,25 +4,24 @@ using Microsoft.Extensions.Logging;
 using Onix.Core.Abstraction;
 using Onix.Core.Extensions;
 using Onix.SharedKernel;
+using Onix.SharedKernel.ValueObjects;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Application.Database;
-using Onix.WebSites.Domain.Blocks;
-using Onix.WebSites.Domain.Blocks.ValueObjects;
 
-namespace Onix.WebSites.Application.Commands.WebSites.AddBlock;
+namespace Onix.WebSites.Application.Commands.Categories.AddProduct;
 
-public class AddBlockHandler
+public class AddProductHandle
 {
-    private readonly IValidator<AddBlockCommand> _validator;
+    private readonly IValidator<AddProductCommand> _validator;
     private readonly IWebSiteRepository _webSiteRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<AddBlockHandler> _logger;
+    private readonly ILogger<AddProductHandle> _logger;
 
-    public AddBlockHandler(
-        IValidator<AddBlockCommand> validator,
+    public AddProductHandle(
+        IValidator<AddProductCommand> validator,
         IWebSiteRepository webSiteRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddBlockHandler> logger)
+        ILogger<AddProductHandle> logger)
     {
         _validator = validator;
         _webSiteRepository = webSiteRepository;
@@ -31,7 +30,7 @@ public class AddBlockHandler
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
-        AddBlockCommand command ,CancellationToken cancellationToken)
+        AddProductCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command,cancellationToken);
         if (validationResult.IsValid == false)
@@ -40,19 +39,26 @@ public class AddBlockHandler
         var webSiteId = WebSiteId.Create(command.WebSiteId);
         
         var webSiteResult = await _webSiteRepository
-            .GetByIdWithBlocks(webSiteId, cancellationToken);
+            .GetById(webSiteId, cancellationToken);
+
         if (webSiteResult.IsFailure)
             return webSiteResult.Error.ToErrorList();
 
-        var blockId = BlockId.NewUserId();
-        var code = Code.Create(command.Code).Value;
-        var block = Block.Create(blockId, code).Value;
+        var blockId = BlockId.Create(command.BlockId);
+        var name = Name.Create(command.Name).Value;
+        var description = Description.Create(command.Description).Value;
+        
+        /*var product = Product.Create(
+            blockId,
+            name,
+            description,
+            null,
+            null).Value;
 
-        var result = webSiteResult.Value.AddBlock(block);
-        if (result.IsFailure)
-            return result.Error.ToErrorList();
+        webSiteResult.Value.Blocks.add;
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return block.Id.Value;
+        await _unitOfWork.SaveChangesAsync(cancellationToken);*/
+
+        return Guid.NewGuid();
     }
 }

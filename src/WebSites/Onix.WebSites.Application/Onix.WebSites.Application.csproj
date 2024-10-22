@@ -12,14 +12,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Appearances\" />
-      <Folder Include="Commands\Appearances\" />
-      <Folder Include="Commands\Blocks\" />
-      <Folder Include="Commands\Categories\" />
-      <Folder Include="Commands\Contacts\" />
-      <Folder Include="Commands\Locations\" />
-      <Folder Include="Commands\Products\" />
-      <Folder Include="Commands\Services\" />
+      <Folder Include="Commands\Categories\Update\" />
+      <Folder Include="Commands\Contacts\Update\" />
+      <Folder Include="Commands\Locations\Update\" />
+      <Folder Include="Commands\Products\Update\" />
+      <Folder Include="Commands\Services\Update\" />
       <Folder Include="Commands\WebSites\AddFavicon\" />
       <Folder Include="Queries\GetWebBlockById\" />
     </ItemGroup>

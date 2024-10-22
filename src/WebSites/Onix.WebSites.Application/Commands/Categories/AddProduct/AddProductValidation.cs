@@ -3,7 +3,7 @@ using Onix.Core.Validation;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects;
 
-namespace Onix.WebSites.Application.Commands.Products.AddProduct;
+namespace Onix.WebSites.Application.Commands.Categories.AddProduct;
 
 public class AddProductValidation : AbstractValidator<AddProductCommand>
 {

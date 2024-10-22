@@ -1,6 +1,6 @@
 namespace Onix.WebSites.Application.Commands.WebSites.AddContact;
 
-public class AddContactCommand
-{
-    
-}
+public record AddContactCommand(
+    Guid WebSiteId,
+    string Phone,
+    string Email);

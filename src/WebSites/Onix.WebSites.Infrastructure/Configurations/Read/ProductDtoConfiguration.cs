@@ -4,7 +4,7 @@ using Onix.Core.Dtos;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Read;
 
-public class ProductConfiguration : IEntityTypeConfiguration<ProductDto>
+public class ProductDtoConfiguration : IEntityTypeConfiguration<ProductDto>
 {
     public void Configure(EntityTypeBuilder<ProductDto> builder)
     {

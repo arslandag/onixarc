@@ -31,6 +31,8 @@ public static class Constants
 
     public const int SHARE_MAX_LENGTH = 50;
     
+    public const int JSON_MAX_LENGTH = 500;
+    
     public const string URL_REGEX = "^[a-z]+(-[a-z]+)?$";
     public const string ID_REGEX = "^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$";
 

@@ -1,6 +1,6 @@
 namespace Onix.WebSites.Application.Commands.WebSites.AddFAQ;
 
-public class AddFAQCommand
-{
-    
-}
+public record AddFAQCommand(
+    Guid WebSiteId,
+    string Question,
+    string Answer);

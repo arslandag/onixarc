@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Onix.Framework;
-using Onix.WebSites.Application.Commands.Products.AddProduct;
 using Onix.WebSites.Application.Commands.WebSites.AddBlock;
+using Onix.WebSites.Application.Commands.WebSites.AddCategory;
 using Onix.WebSites.Application.Commands.WebSites.Create;
 using Onix.WebSites.Presentation.Controllers.WebSites.Requests;
 
@@ -38,10 +38,10 @@ public class WebSiteController : ApplicationController
         return Ok(result.Value);
     }
     
-    [HttpPost("{id:guid}/block/{blockId:guid}")]
-    public async Task<IActionResult> AddProduct(
-        [FromForm] AddProductRequest request,
-        [FromServices] AddProductHandle handle,
+    /*[HttpPost("{id:guid}/Category/")]
+    public async Task<IActionResult> AddCategory(
+        [FromForm] AddCategoryRequest request,
+        [FromServices] AddCategoryHandle handle,
         [FromRoute] Guid id,
         [FromRoute] Guid blockId,
         CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ public class WebSiteController : ApplicationController
             return result.Error.ToResponse();
 
         return Ok(result.Value);
-    }
+    }*/
 }

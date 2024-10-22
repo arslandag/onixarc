@@ -103,4 +103,17 @@ public class WebSiteRepository : IWebSiteRepository
 
         return webSite;
     }
+    
+    public async Task<Result<WebSite, Error>> GetByIdWithFavicon(
+        WebSiteId id, CancellationToken cancellationToken = default)
+    {
+        var webSite = await _dbContext.WebSites
+            .Include(w => w.Favicon)
+            .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+        
+        if (webSite is null)
+            return Errors.General.NotFound();
+
+        return webSite;
+    }
 }

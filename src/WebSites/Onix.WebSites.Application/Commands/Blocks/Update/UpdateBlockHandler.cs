@@ -4,24 +4,26 @@ using Microsoft.Extensions.Logging;
 using Onix.Core.Abstraction;
 using Onix.Core.Extensions;
 using Onix.SharedKernel;
-using Onix.SharedKernel.ValueObjects;
 using Onix.SharedKernel.ValueObjects.Ids;
+using Onix.WebSites.Application.Commands.WebSites.AddBlock;
 using Onix.WebSites.Application.Database;
+using Onix.WebSites.Domain.Blocks;
+using Onix.WebSites.Domain.Blocks.ValueObjects;
 
-namespace Onix.WebSites.Application.Commands.Products.AddProduct;
+namespace Onix.WebSites.Application.Commands.Blocks.Update;
 
-public class AddProductHandle
+public class UpdateBlockHandler
 {
-    private readonly IValidator<AddProductCommand> _validator;
+    private readonly IValidator<UpdateBlockCommand> _validator;
     private readonly IWebSiteRepository _webSiteRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<AddProductHandle> _logger;
+    private readonly ILogger<UpdateBlockHandler> _logger;
 
-    public AddProductHandle(
-        IValidator<AddProductCommand> validator,
+    public UpdateBlockHandler(
+        IValidator<UpdateBlockCommand> validator,
         IWebSiteRepository webSiteRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddProductHandle> logger)
+        ILogger<UpdateBlockHandler> logger)
     {
         _validator = validator;
         _webSiteRepository = webSiteRepository;
@@ -30,7 +32,7 @@ public class AddProductHandle
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(
-        AddProductCommand command, CancellationToken cancellationToken)
+        UpdateBlockCommand command ,CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command,cancellationToken);
         if (validationResult.IsValid == false)
@@ -39,26 +41,21 @@ public class AddProductHandle
         var webSiteId = WebSiteId.Create(command.WebSiteId);
         
         var webSiteResult = await _webSiteRepository
-            .GetById(webSiteId, cancellationToken);
-
+            .GetByIdWithBlocks(webSiteId, cancellationToken);
         if (webSiteResult.IsFailure)
             return webSiteResult.Error.ToErrorList();
 
         var blockId = BlockId.Create(command.BlockId);
-        var name = Name.Create(command.Name).Value;
-        var description = Description.Create(command.Description).Value;
+        var code = Code.Create(command.Code).Value;
         
-        /*var product = Product.Create(
-            blockId,
-            name,
-            description,
-            null,
-            null).Value;
+        var blockResult = webSiteResult.Value.Blocks
+            .FirstOrDefault(b => b.Id == blockId);
+        if (blockResult is null)
+            return Errors.General.NotFound(blockId.Value).ToErrorList();
 
-        webSiteResult.Value.Blocks.add;
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);*/
-
-        return Guid.NewGuid();
+        blockResult.Update(code);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        return blockResult.Id.Value;
     }
 }

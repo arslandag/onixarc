@@ -44,8 +44,6 @@ public class CreateWebSiteHandler
             return validationResult.ToList();
 
         var url = Url.Create(command.Url).Value;
-        var name = Name.Create(command.Name).Value;
-
         var query = new GetWebSiteByUrlQuery(url.Value);
         
         var website = await _getWebSiteByUrlHandle.Handle(query,cancellationToken);
@@ -53,7 +51,7 @@ public class CreateWebSiteHandler
             return Errors.Domain.AlreadyExist(nameof(url)).ToErrorList();
 
         var webSiteId = WebSiteId.NewId();
-        
+        var name = Name.Create(command.Name).Value;
         var appearance = Appearance.Bases;
         
         var webSiteToCreate = WebSite.Create(
@@ -63,11 +61,7 @@ public class CreateWebSiteHandler
             appearance).Value;
 
         await _webSiteRepository.Add(webSiteToCreate, cancellationToken);
-
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        _logger.LogInformation("Created website {url} with id {websiteId}", url, webSiteId);
-        
         return webSiteToCreate.Id.Value;
     }
 }

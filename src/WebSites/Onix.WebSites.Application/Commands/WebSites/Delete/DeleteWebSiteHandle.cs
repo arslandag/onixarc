@@ -46,6 +46,5 @@ public class DeleteWebSiteHandle
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return result;
-
     }
 }

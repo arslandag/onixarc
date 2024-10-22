@@ -4,7 +4,7 @@ using Onix.Core.Dtos;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Read;
 
-public class PhotoConfiguration : IEntityTypeConfiguration<PhotoDto>
+public class PhotoDtoConfiguration : IEntityTypeConfiguration<PhotoDto>
 {
     public void Configure(EntityTypeBuilder<PhotoDto> builder)
     {

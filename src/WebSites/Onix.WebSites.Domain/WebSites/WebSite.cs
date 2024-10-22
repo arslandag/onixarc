@@ -38,17 +38,17 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
 
     public Appearance Appearance { get; private set; }
     
-    public Phone Phone { get; private set; }
-    public Email Email { get; private set; }
+    public Phone? Phone { get; private set; }
+    public Email? Email { get; private set; }
     
     public IReadOnlyList<Photo> Favicon => _favicon;
     private readonly List<Photo> _favicon = [];
 
     public IReadOnlyList<SocialMedia> SocialMedias => _socialMedias;
-    private readonly List<SocialMedia> _socialMedias;
+    private readonly List<SocialMedia> _socialMedias = [];
 
-    public IReadOnlyList<DataSolution> FAQs => _faqs;
-    private readonly List<DataSolution> _faqs = [];
+    public IReadOnlyList<Faq> Faqs => _faqs;
+    private readonly List<Faq> _faqs = [];
 
     public IReadOnlyList<Block> Blocks => _blocks;
     private readonly List<Block> _blocks = [];
@@ -82,11 +82,11 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
     }
 
     public UnitResult<Error> Update(
-        Url newUrl = null,
-        Name newName = null)
+        Url newUrl,
+        Name newName)
     {
-        this.Url = newUrl ?? this.Url;
-        this.Name = newName ?? this.Name;
+        this.Url = newUrl;
+        this.Name = newName;
         
         return UnitResult.Success<Error>();
     }
@@ -106,7 +106,7 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
     public UnitResult<Error> DeleteSocial(
         SocialMedia socialMedia)
     {
-        if (_socialMedias.Count >= Constants.MIN_COUNT)
+        if (_socialMedias.Count is Constants.MIN_COUNT)
             return UnitResult.Failure<Error>(
                 Errors.Domain.Empty(nameof(socialMedia)));
 
@@ -114,9 +114,17 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
         return UnitResult.Success<Error>();
     }
     
+    public UnitResult<Error> UpdateContact(
+        Phone phone, Email email)
+    {
+        this.Phone = phone;
+        this.Email = email;
+        return UnitResult.Success<Error>();
+    }
+    
     //faq
     public UnitResult<Error> AddFAQ(
-        DataSolution faq)
+        Faq faq)
     {
         if (_faqs.Count >= Constants.MAX_FAQ_COUNT)
             return UnitResult.Failure<Error>(
@@ -127,7 +135,7 @@ public class WebSite : SharedKernel.Entity<WebSiteId>
     }
     
     public UnitResult<Error> RemoveFAQ(
-        DataSolution faq)
+        Faq faq)
     {
         if (_faqs.Count is Constants.MIN_COUNT)
             return UnitResult.Failure<Error>(

@@ -1,6 +1,5 @@
 namespace Onix.WebSites.Application.Commands.WebSites.AddCategory;
 
-public class AddCategoryCommand
-{
-    
-}
+public record AddCategoryCommand(
+    Guid WebSiteId,
+    string Name);

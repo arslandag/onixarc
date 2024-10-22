@@ -1,8 +1,10 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Onix.SharedKernel;
 using Onix.SharedKernel.ValueObjects.Ids;
 using Onix.WebSites.Domain.WebSites;
+using Onix.WebSites.Domain.WebSites.ValueObjects;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Write;
 
@@ -57,7 +59,7 @@ public class WebSiteConfiguration : IEntityTypeConfiguration<WebSite>
                 .HasColumnName("font");
         });
 
-        builder.ComplexProperty(w => w.Phone, tb =>
+        builder.OwnsOne(w => w.Phone, tb =>
         {
             tb.Property(p => p.Value)
                 .IsRequired(false)
@@ -65,7 +67,7 @@ public class WebSiteConfiguration : IEntityTypeConfiguration<WebSite>
                 .HasColumnName("phone");
         });
         
-        builder.ComplexProperty(w => w.Email, tb =>
+        builder.OwnsOne(w => w.Email, tb =>
         {
             tb.Property(e => e.Value)
                 .IsRequired(false)
@@ -73,35 +75,21 @@ public class WebSiteConfiguration : IEntityTypeConfiguration<WebSite>
                 .HasColumnName("email");
         });
 
-        builder.OwnsMany(w => w.SocialMedias, tb =>
-        {
-            tb.ToJson();
-            
-            tb.Property(s => s.Social)
-                .IsRequired(false)
-                .HasMaxLength(Constants.SOCIAL_MAX_LENGHT)
-                .HasColumnName("social");
+        builder.Property(w => w.SocialMedias)
+            .HasColumnName("social_medias")
+            .HasMaxLength(Constants.JSON_MAX_LENGTH)
+            .IsRequired(false)
+            .HasConversion(
+                sm => JsonSerializer.Serialize(sm, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<SocialMedia>>(json, JsonSerializerOptions.Default)!);
 
-            tb.Property(s => s.Link)
-                .IsRequired(false)
-                .HasMaxLength(Constants.LINK_MAX_LENGHT)
-                .HasColumnName("link");
-        });
-
-        builder.OwnsMany(w => w.FAQs, tb =>
-        {
-            tb.ToJson();
-            
-            tb.Property(f => f.Answer)
-                .IsRequired(false)
-                .HasMaxLength(Constants.ANSWER_MAX_LENGHT)
-                .HasColumnName("answer");
-
-            tb.Property(f => f.Question)
-                .IsRequired(false)
-                .HasMaxLength(Constants.QUESTION_MAX_LENGHT)
-                .HasColumnName("question");
-        });
+        builder.Property(w => w.Faqs)
+            .HasColumnName("faqs")
+            .HasMaxLength(Constants.JSON_MAX_LENGTH)
+            .IsRequired(false)
+            .HasConversion(
+                faqs => JsonSerializer.Serialize(faqs, JsonSerializerOptions.Default),
+                json => JsonSerializer.Deserialize<List<Faq>>(json, JsonSerializerOptions.Default)!);
 
         builder.HasMany(w => w.Categories)
             .WithOne()

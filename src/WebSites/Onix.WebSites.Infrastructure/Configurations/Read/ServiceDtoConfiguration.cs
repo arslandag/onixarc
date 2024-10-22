@@ -4,7 +4,7 @@ using Onix.Core.Dtos;
 
 namespace Onix.WebSites.Infrastructure.Configurations.Read;
 
-public class ServiceConfiguration : IEntityTypeConfiguration<ServiceDto>
+public class ServiceDtoConfiguration : IEntityTypeConfiguration<ServiceDto>
 {
     public void Configure(EntityTypeBuilder<ServiceDto> builder)
     {

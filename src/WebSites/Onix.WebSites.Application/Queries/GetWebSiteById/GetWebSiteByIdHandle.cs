@@ -20,6 +20,7 @@ public class GetWebSiteByIdHandle
         CancellationToken cancellationToken = default)
     {
         var webSiteDto = await _readDbContext.WebSites
+            .Include(w => w.Blocks)
             .FirstOrDefaultAsync(w => w.Id == query.Id, cancellationToken);
 
         if (webSiteDto is null)
