@@ -28,6 +28,11 @@ public class ConstType
     //block
     public const string Code = "code";
     
+    //appearance
+    public const string ColorScheme = "color scheme";
+    public const string ButtonStyle = "button style";
+    public const string Font = "font";
+    
     //shared
     public const string Url = "url";
     public const string Name = "name";

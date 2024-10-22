@@ -1,3 +1,6 @@
+using CSharpFunctionalExtensions;
+using Onix.SharedKernel;
+
 namespace Onix.WebSites.Domain.Appearances;
 
 public class Appearance
@@ -26,15 +29,14 @@ public class Appearance
         BUTTON_STYLE,
         FONT);
     
-    public Appearance Update(
-        string colorScheme = null,
-        string buttonStyle = null,
-        string font = null)
+    public Result<Appearance, Error> Update(
+        string colorScheme,
+        string buttonStyle,
+        string font)
     {
         return new Appearance(
-            colorScheme ?? this.ColorScheme,
-            buttonStyle ?? this.ButtonStyle,
-            font ?? this.Font
-        );
+            colorScheme,
+            buttonStyle,
+            font);
     }
 }
