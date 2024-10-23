@@ -26,7 +26,7 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
         if (webSite is null)
-            return Errors.General.NotFound();
+            return Errors.General.NotFound(id.Value);
 
         return webSite;
     }
@@ -40,7 +40,7 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
         if (webSite is null)
-            return Errors.General.NotFound();
+            return Errors.General.NotFound(id.Value);
 
         return webSite;
     }
@@ -54,7 +54,7 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
         
         if (webSite is null)
-            return Errors.General.NotFound();
+            return Errors.General.NotFound(id.Value);
 
         return webSite;
     }

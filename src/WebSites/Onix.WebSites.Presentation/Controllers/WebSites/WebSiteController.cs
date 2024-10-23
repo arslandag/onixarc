@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Onix.Framework;
-using Onix.WebSites.Application.Commands.WebSites.AddBlock;
-using Onix.WebSites.Application.Commands.WebSites.AddCategory;
+using Onix.WebSites.Application.Commands.Blocks.Add;
 using Onix.WebSites.Application.Commands.WebSites.Create;
 using Onix.WebSites.Presentation.Controllers.WebSites.Requests;
 
@@ -39,7 +38,7 @@ public class WebSiteController : ApplicationController
     }
     
     /*[HttpPost("{id:guid}/Category/")]
-    public async Task<IActionResult> AddCategory(
+    public async Task<IActionResult> Add(
         [FromForm] AddCategoryRequest request,
         [FromServices] AddCategoryHandle handle,
         [FromRoute] Guid id,

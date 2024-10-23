@@ -12,14 +12,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Categories\Update\" />
-      <Folder Include="Commands\FAQ\Update\" />
+      <Folder Include="Commands\Locations\Delete\" />
       <Folder Include="Commands\Locations\Update\" />
+      <Folder Include="Commands\Products\Delete\" />
       <Folder Include="Commands\Products\Update\" />
+      <Folder Include="Commands\Services\Add\" />
+      <Folder Include="Commands\Services\Delete\" />
       <Folder Include="Commands\Services\Update\" />
+      <Folder Include="Commands\Socials\Delete\" />
       <Folder Include="Commands\Socials\Update\" />
       <Folder Include="Commands\WebSites\AddFavicon\" />
-      <Folder Include="Queries\GetWebBlockById\" />
+      <Folder Include="Queries\Categories\Products\" />
+      <Folder Include="Queries\Categories\Services\" />
+      <Folder Include="Queries\Categories\SubCategories\" />
     </ItemGroup>
 
 </Project>

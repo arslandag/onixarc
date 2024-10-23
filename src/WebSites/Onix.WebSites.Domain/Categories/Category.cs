@@ -34,6 +34,7 @@ public class Category : SharedKernel.Entity<CategoryId>
     public IReadOnlyList<Product> Products => _products;
     private readonly List<Product> _products = [];
 
+    //category
     public static Result<Category, ErrorList> Create(
         CategoryId id,
         Name name,
@@ -45,7 +46,13 @@ public class Category : SharedKernel.Entity<CategoryId>
             parentCategory);
     }
 
-    //category
+    public UnitResult<Error> Update(Name name)
+    {
+        this.Name = name;
+        return UnitResult.Success<Error>();
+    }
+
+    //subcategory
     public UnitResult<Error> AddSubCategory(
         Category category)
     {

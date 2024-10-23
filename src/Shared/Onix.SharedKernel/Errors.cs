@@ -9,6 +9,11 @@ public static class Errors
             var forId = id == null ? "" : $" for Id '{id}'";
             return Error.NotFound("record.not.found", $"record not found{forId}");
         }
+        
+        public static Error NotFound(string? value = "value")
+        {
+            return Error.NotFound("value.is.required", $"{value} is required");
+        }
 
         public static Error WrongType(string? value = "value")
         {

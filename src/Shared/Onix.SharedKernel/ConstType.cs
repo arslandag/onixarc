@@ -5,6 +5,7 @@ public class ConstType
     //Id
     public const string WebSiteId = "website id";
     public const string BlockId = "block id";
+    public const string CategoryId = "category id";
     
     //Social
     public const string SocialMedia = "social media";

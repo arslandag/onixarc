@@ -1,7 +1,6 @@
 using FluentValidation;
 using Onix.Core.Validation;
 using Onix.SharedKernel;
-using Onix.WebSites.Application.Commands.WebSites.AddBlock;
 
 namespace Onix.WebSites.Application.Commands.Blocks.Update;
 

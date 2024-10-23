@@ -1,4 +1,4 @@
-using Onix.WebSites.Application.Commands.Categories.AddProduct;
+using Onix.WebSites.Application.Commands.Products.Add;
 
 namespace Onix.WebSites.Presentation.Controllers.WebSites.Requests;
 
